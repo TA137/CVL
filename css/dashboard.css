@@ -1,0 +1,55 @@
+.dash-body{
+    margin: 0 0 0 0;
+    padding: 0;
+}
+.navbar-default,.navbar-second,.second-submenu {
+    background: #808080;
+    color: #000;
+}
+.second-submenu{ margin : 0;}
+.navbar-back{
+    margin: 0 0 1px 0;
+}
+.navbar-default .navbar-nav > li > a {
+   color: #000; /*Change active text color here*/
+   font-size: 15px;
+   font-weight: bold;
+}
+.menu-button {
+    background-color: #1f2458;
+    color:#fff;
+    width:  100px;
+}
+.top-nav{
+    margin-bottom: 50px;
+    
+}
+.bottom-nav{
+    margin-left: 20px;
+}
+.navbar-brand img,.submenu img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50%;
+}
+#navbar-brand{
+    color: #fff; opacity: 0.8;
+}
+#navbar-brand:hover{
+    opacity: 1;
+}
+.left-menu{
+   border-right: 1px solid #808080;
+   border-top:1px solid #808080;
+   min-height: 500px;
+}
+.container-fluid > .row {
+    margin: 0;
+}
+.print-down{
+    font-size: 15px; margin-right: 5px; padding-right: 5px; text-align: center; color: #1f2458;
+}
+.table-striped{
+    color: #1f2458;
+}
+/* check box custom */
