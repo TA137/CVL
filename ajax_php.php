@@ -1,5 +1,6 @@
 <?php
 session_start();
+if(@isset($_SERVER['HTTP_REFERER'])){
 require_once 'dbconfig.php'; //connection ?>
 <?php
 if(isset($_REQUEST['username']) && isset($_REQUEST['password'])){
@@ -35,4 +36,9 @@ $id=$_REQUEST['require_id'];
 $field=$_REQUEST['field'];
 $user->change_details($id,$field);
 }
+
+}
+		else{
+			header('location:login.php');
+		}
 ?>

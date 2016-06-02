@@ -1,6 +1,7 @@
 <?php
-session_start(); //session is staring
-  include "dbconfig.php";
+session_start();
+if(@isset($_SERVER['HTTP_REFERER'])){
+require_once 'dbconfig.php'; //connection
   if(isset($_REQUEST['folder_id'])){
     $org_id=$_REQUEST['folder_id'];
 ?>
@@ -36,13 +37,14 @@ session_start(); //session is staring
 											   //<tr><th class='col-xs-1'>#</th><th class='col-xs-2'>Icon</th><th class='col-xs-3'>Upload Time</th><th class='col-xs-6'>Description</th></thead><tbody>";
                                                 while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
                                                     //add some setting like edit view card  and details
-                                                    echo "<tr>
-                                                            <td><input type='checkbox'></td>
-                                                            <td>{$row['Doc_name']}</td>
-                                                            <td>{$row['Doc_type']}</td>
+                                                    $name=substr($row['Doc_name'],0,30);
+													echo "<tr>
+															<td><input type='checkbox'></td>
+															<td>$name</td>
 															<td>{$row['organization']}</td>
-                                                            <td class='center'>{$row['upl_time']}</td>";
-                                                      echo"<td class='center'>";if($_SESSION['Print'] || $_SESSION['userType']){ ?>
+															<td>{$row['categories']}</td>
+															<td>{$row['upl_time']}</td>";
+                                                     echo"<td class='center'>";if($_SESSION['Print'] || $_SESSION['userType']){ ?>
 																	  
 													<a onclick="view_doc(<?php echo"'view',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
 													echo "'".$row['Doc_type']."'";echo")"?>" class='print-down' href='#'>
@@ -66,6 +68,9 @@ session_start(); //session is staring
   				</div>
   			</div>
 <?php
+  }
 }
-?>
-  			
+		else{
+			header('location:login.php');
+		}
+?>			

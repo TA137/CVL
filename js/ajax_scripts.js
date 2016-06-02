@@ -5,11 +5,11 @@ function upload_docddd(user_Id) {
       var description=document.getElementById("description").value;
 	  if (file_to_upload.trim()=="" || name.trim()=="organization" || name.trim()=="" || categorie.trim()=="" || categorie=="categorie"){
 	      if(name=="organization" || name.trim()==""){
-		document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Organization name not Given</div>";
+                document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Organization name not Given</div>";
 	      } else if(categorie=="categorie" || categorie.trim()==""){
-		document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Give Categorie</div>";
+                document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Give Categorie</div>";
 	      }else if(file_to_upload.trim()==""){
-		document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Browse for a file!</div>";
+                document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Browse for a file!</div>";
 	      }
 	  
 	  return false;
@@ -343,7 +343,6 @@ function emailAddressFunction(email) {
           return (false)  
 }
 function view_doc(action,id,org_id,cat_id,doc_type) {
-        alert(action);
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
              if (xhttp.readyState == 4 && xhttp.status == 200) {

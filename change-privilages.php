@@ -1,6 +1,7 @@
 <?php
-  include "dbconfig.php";
-?>
+session_start();
+if(@isset($_SERVER['HTTP_REFERER'])){
+require_once 'dbconfig.php'; //connection ?>
 <div class="content-box-large">
   				<div class="panel-body" >
   					<table cellpadding="0" cellspacing="0" border="0" class="table table-striped" id="example">
@@ -47,4 +48,9 @@
 			            </tbody>
 			         </table>
   				</div>
-</div>		
+</div>
+<?php }
+		else{
+			header('location:login.php');
+		}
+?>

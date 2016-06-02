@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(@isset($_SERVER['HTTP_REFERER'])){
+require_once 'dbconfig.php'; //connection ?>
+<?php
 require_once("class.chip_download.php");
 if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_id'])&&isset($_REQUEST['Doc_type'])){
     $action=$_REQUEST['Action'];
@@ -8,9 +12,7 @@ if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_
     $doc_type=$_REQUEST['Doc_type'];
     //$filesToView=array();
     $filesToView=$org_id."/".$cat_id."/".$id.".".$doc_type;
-    echo $filesToView."<br>";
     if(unzip($filesToView)){
-        echo "unzipped";
         if($action=='view'){
             if(strtolower($doc_type)=="jpg" || strtolower($doc_type)=="png"){
               echo"<img src='uzzipped/".$filesToView."'>";
@@ -56,9 +58,8 @@ if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_
                              
                             }
                  }else{
-                    echo "wallah";
-		flush();
-		exit;
+				flush();
+				exit;
                  }
             
  
@@ -66,6 +67,10 @@ if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_
     }
     
 }
+}
+		else{
+			header('location:login.php');
+		}
 function unzip($files){
     $zip = new ZipArchive;
     if ($zip->open('my-archive.zip') === TRUE) {

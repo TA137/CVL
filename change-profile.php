@@ -1,4 +1,7 @@
-<?php require_once 'dbconfig.php'; //connection ?>
+<?php
+session_start();
+if(@isset($_SERVER['HTTP_REFERER'])){
+require_once 'dbconfig.php'; //connection ?>
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
@@ -68,3 +71,8 @@
                     </div>
     <div class="col-md-3"></div>
 </div>
+<?php }
+		else{
+			header('location:login.php');
+		}
+?>

@@ -1,6 +1,7 @@
 <?php
-  include "dbconfig.php";
-?>
+session_start();
+if(@isset($_SERVER['HTTP_REFERER'])){
+require_once 'dbconfig.php'; //connection ?>
 <div class="content-box-large">
   				<div class="panel-heading">
 					<div class="panel-title">Folders</div>
@@ -44,5 +45,8 @@
   					</div>
   				</div>
   			</div>
-
-  			
+<?php }
+		else{
+			header('location:login.php');
+		}
+?>

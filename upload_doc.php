@@ -3,7 +3,7 @@
    include "zip.php";
 ?>
 <?php
-if(isset($_FILES['upload_doc']['name'])){ //if the generate button is clicked AND
+if(@isset($_SERVER['HTTP_REFERER']) && isset($_FILES['upload_doc']['name'])){ //if the generate button is clicked AND
       $file_name = $_FILES['upload_doc']['name'];
       $file_tmp =$_FILES['upload_doc']['tmp_name'];
       $file_type=$_FILES['upload_doc']['type'];
@@ -46,7 +46,7 @@ if(isset($_FILES['upload_doc']['name'])){ //if the generate button is clicked AN
       }
 
    }else{
-      echo "<div class='error'>some error occur.</div>";
+      echo "<div class='alert alert-danger'>some error occur.</div>";
  }
  
  

@@ -1,6 +1,7 @@
 <?php
-   include "dbconfig.php";
-?>
+session_start();
+if(@isset($_SERVER['HTTP_REFERER'])){
+require_once 'dbconfig.php'; //connection ?>
 <?php
  if(isset($_REQUEST['user_Id']) && isset($_REQUEST['firstname'])){ //if the generate button is clicked AND
     
@@ -57,6 +58,9 @@
  }
  
  
- 
+}
+		else{
+			header('location:login.php');
+		}
  
 ?>

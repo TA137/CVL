@@ -154,7 +154,7 @@
 							 <!-- Sub menu -->
 							 <ul>
 							  <?php
-										  $stmt = $DB_con->prepare("SELECT * FROM user");
+										  $stmt = $DB_con->prepare("SELECT * FROM user,upload_doc where upload_doc.user_Id=user.user_Id order by upload_doc.id desc limit 6");
 										  $stmt->execute(array());
 										  $i=0;
 										  while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -204,9 +204,10 @@
 							
 											   				<?php   while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
 																	  //add some setting like edit view card  and details
+																	  $name=substr($row['Doc_name'],0,30);
 																	  echo "<tr>
 																			  <td><input type='checkbox'></td>
-																			  <td>{$row['Doc_name']}</td>
+																			  <td>$name</td>
 																			  <td>{$row['organization']}</td>
 																			  <td>{$row['categories']}</td>
 																			  <td>{$row['upl_time']}</td>";
