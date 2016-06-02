@@ -19,10 +19,10 @@ if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_
             }
         }
         if($action=='download'){
-            echo "<br><br><br><br><br><br><br><br><br><br>";
-            $download_path = "uzzipped/";
-            $file = "4/4/13.pdf";
-                         $args = array(
+                            if (file_exists("uzzipped/".$filesToView)) {
+                            $download_path = "uzzipped/";
+                            $file = $filesToView;
+                            $args = array(
                                     'download_path'     =>   $download_path,
                                     'file'              =>   $file,
                                     'extension_check'   =>   TRUE,
@@ -55,6 +55,12 @@ if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_
                                 $download->get_download();
                              
                             }
+                 }else{
+                    echo "wallah";
+		flush();
+		exit;
+                 }
+            
  
         }
     }
@@ -69,6 +75,9 @@ function unzip($files){
     } else {
         return false;
     }
+}
+function download(){
+    
 }
 
 ?>

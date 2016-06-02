@@ -42,11 +42,21 @@ session_start(); //session is staring
                                                             <td>{$row['Doc_type']}</td>
 															<td>{$row['organization']}</td>
                                                             <td class='center'>{$row['upl_time']}</td>";
-                                                      echo"<td class='center'>";if($_SESSION['Print'] || $_SESSION['userType']){ echo"<a class='print-down' href=''><img src='logo/print_icon.png'/></a>"; }
-																	  if($_SESSION['Download'] || $_SESSION['userType']){ echo "<a class='print-down' href='#'><img src='logo/download_icon.png'/></a>"; }
-																	  if($row['Doc_type']!='docx' && $row['Doc_type']!='xlsx'){ ?><a onclick="view_doc(<?php echo $row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
-																	  echo "'".$row['Doc_type']."'";echo")"?>" class='print-down' href='#'><img src='logo/view.png'/></a><?php }echo"</td></tr>";
-																   }    
+                                                      echo"<td class='center'>";if($_SESSION['Print'] || $_SESSION['userType']){ ?>
+																	  
+													<a onclick="view_doc(<?php echo"'view',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
+													echo "'".$row['Doc_type']."'";echo")"?>" class='print-down' href='#'>
+													<img src='logo/print_icon.png'/></a>
+													<?php }
+													
+													
+													if($_SESSION['Download'] || $_SESSION['userType']){ ?><a href="view_doc.php?doc_id=<?php echo $row['id_doc']."&org_id=".$row['org_id']."&cat_id=".$row['cat_id']."&Doc_type=";
+													echo $row['Doc_type']."&Action=download";?>" class='print-down'>
+													<img src='logo/download_icon.png'/></a><?php }
+													
+													if($row['Doc_type']!='docx' && $row['Doc_type']!='xlsx'){ ?><a onclick="view_doc(<?php echo"'view',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
+													echo "'".$row['Doc_type']."'";echo")"?>" class='print-down' href='#'><img src='logo/view.png'/></a><?php }echo"</td></tr>";
+												 }    
 										  }
 								  
 							?>

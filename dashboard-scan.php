@@ -218,8 +218,8 @@
 																	  <?php }
 																	  
 																	  
-																	  if($_SESSION['Download'] || $_SESSION['userType']){ ?><a onclick="view_doc(<?php echo"'download',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
-																	  echo "'".$row['Doc_type']."'";echo")"?>" class='print-down' href='#'>
+																	  if($_SESSION['Download'] || $_SESSION['userType']){ ?><a href="view_doc.php?doc_id=<?php echo $row['id_doc']."&org_id=".$row['org_id']."&cat_id=".$row['cat_id']."&Doc_type=";
+																	  echo $row['Doc_type']."&Action=download";?>" class='print-down'>
 																	  <img src='logo/download_icon.png'/></a><?php }
 																	  
 																	  if($row['Doc_type']!='docx' && $row['Doc_type']!='xlsx'){ ?><a onclick="view_doc(<?php echo"'view',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";

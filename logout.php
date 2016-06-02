@@ -1,11 +1,18 @@
 <?php 
 	session_start();
 	session_destroy();
-	$files_cards = glob('uzzipped/*'); // get all file names
-                foreach($files_cards as $file){ // iterate files
-                  if(is_file($file)){
-                    unlink($file); // delete file
-                  }
-     }
+	recursiveRemoveDirectory('uzzipped/'); // get all file names
+             function recursiveRemoveDirectory($directory)
+			{
+				foreach(glob("{$directory}/*") as $file)
+				{
+					if(is_dir($file)) { 
+						recursiveRemoveDirectory($file);
+					} else {
+						unlink($file);
+					}
+				}
+				rmdir($directory);
+			}
 	header("location:login.php");
 ?>
