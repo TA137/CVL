@@ -212,10 +212,15 @@
 																			  <td>{$row['categories']}</td>
 																			  <td>{$row['upl_time']}</td>";
 																	  echo"<td class='center'>";if($_SESSION['Print'] || $_SESSION['userType']){ ?>
+																	  <form method="POST" class='print-down'action="print-files.php" target="_blank" style="width: 24px;" id="print_form<?php echo $row['id_doc']; ?>">
+																		<input value="<?php echo $row['id_doc']; ?>" type="text" name="id_doc" class="print-field">
+																		<input value="<?php echo $row['org_id']; ?>" type="text" name="org_id"class="print-field">
+																		<input value="<?php echo $row['cat_id']; ?>" type="text" name="cat_id" class="print-field">
+																		<input value="<?php echo $row['Doc_type']; ?>" type="text" name="Doc_type" class="print-field">
+																		<a onclick="document.getElementById('print_form'+<?php echo $row['id_doc']; ?>).submit();" name="wallah" href='#'><img src='logo/print_icon.png'/></a>
+																	  </form>
 																	  
-																	  <a onclick="view_doc(<?php echo"'view',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
-																	  echo "'".$row['Doc_type']."'";echo")"?>" class='print-down' href='#'>
-																	  <img src='logo/print_icon.png'/></a>
+																	  
 																	  <?php }
 																	  
 																	  
@@ -291,5 +296,12 @@
 			  $("#"+id).css("border","1px solid #88D5E9");
 	  }
 	</script>
+	<!--height: 100px;
+    background: red; /* For browsers that do not support gradients */    
+    background: -webkit-linear-gradient(330deg,red, yellow, red,red); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(330deg,red, yellow, red,red); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(330deg,red, yellow, red, red); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(330deg,red, yellow, red,red); /* Standard syntax (must be last) */-->
+}
   </body>
 </html>

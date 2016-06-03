@@ -47,9 +47,13 @@
     margin: 0;
 }
 .print-down{
-    font-size: 15px; margin-right: 5px; padding-right: 5px; text-align: center; color: #1f2458;
+    font-size: 15px; margin-right: 5px; padding-right: 5px; text-align: center; color: #1f2458; display: inline;
 }
 .table-striped{
     color: #1f2458;
 }
-/* check box custom */
+/* print css */
+
+.print-field{
+    display:none;
+}
