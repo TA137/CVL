@@ -253,6 +253,19 @@ function changeProfile(id){
         
         return false;
 }
+function all_files(){
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+             if (xhttp.readyState == 4 && xhttp.status == 200) {
+                document.getElementById("right-body").innerHTML = xhttp.responseText;
+                $('#example2').DataTable();
+             }
+        };
+        xhttp.open("POST", "all-files.php", true);
+        xhttp.send();
+        
+        return false;
+}
 function changeProfileSumit(id){
        try {
         var firstname = document.getElementById("firstname").value;

@@ -116,7 +116,7 @@
 			  <div class="bottom-nav">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li class="current"><a href=""><i class="glyphicon glyphicon-file"></i> All files</a></li>
+                    <li class="current"><a href="#" onclick="all_files()"><i class="glyphicon glyphicon-file"></i> All files</a></li>
 					<li><a href="#folders" id="folders"onclick="selectFolders();"><i class="glyphicon glyphicon-folder-close"></i>Folders</a></li>
 					<li class="submenu">
                          <a href="#settings" id="settings">
@@ -284,7 +284,9 @@
 			}
 		});
       });
-	   
+	   $(document).ready(function() {
+    $('#example').DataTable();
+} );
 	  function focussing(id){
 			  $("#"+id).css("border","1px solid #88D5E9");
 	  }
