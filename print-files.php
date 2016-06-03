@@ -9,6 +9,7 @@ if(isset($_POST['id_doc'])&& isset($_POST['org_id'])&& isset($_POST['cat_id']) &
         if(strtolower($doc_type)=="jpg" || strtolower($doc_type)=="png"){
           if (file_exists("uzzipped/".$filesToView)) {
                 echo"<img src='uzzipped/".$filesToView."'>";
+                echo "<script>window.print();</script>";
             }else{
                 echo "<script>alert('file does not exists');</script>";
                 echo "<script>window.close();</script>";
