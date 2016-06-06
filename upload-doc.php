@@ -30,8 +30,9 @@ require_once 'dbconfig.php'; //connection ?>
                                     <li>
 										<label>Categorie</label>
 										<div class="inner-addon left-addon">
+											<input name="cat" id="cat" class="form-control field-long" >
 											<i class="upload-glyph glyphicon glyphicon-user"></i>
-											<select onchange="show_subcategories()" name="categorie" id="categorie" class="form-control field-long" >
+											<select onchange='show_subcategories(this.value)' name="categorie" id="categorie" class="form-control field-long" >
                                                 <option value="categorie">Choose Categorie</option>
                                                 <?php
                                                 $stmt_drop = $DB_con->prepare("SELECT * FROM categories");
@@ -43,21 +44,8 @@ require_once 'dbconfig.php'; //connection ?>
                                             </select>
                                         </div>
 									</li>
-									<li class="hide suba-direct">
-										<label>Categorie</label>
-										<div class="inner-addon left-addon">
-											<i class="upload-glyph glyphicon glyphicon-user"></i>
-											<select name="sub_categorie" id="sub_categorie" class="form-control field-long" >
-                                                <option value="sub_categorie">Choose Categorie</option>
-                                                <?php
-                                                $stmt_drop = $DB_con->prepare("SELECT * FROM categories");
-                                                $stmt_drop->execute(array());
-                                                while($row_drop=$stmt_drop->fetch(PDO::FETCH_ASSOC)){
-                                                    echo "<option value='{$row_drop['id']}'>{$row_drop['categories']}</option>";
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
+									<li id="suba-direct">
+										
 									</li>
                                     <li>
 										<label>Choose file</label>

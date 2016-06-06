@@ -38,11 +38,10 @@ require_once 'dbconfig.php'; //connection ?>
 																			  <td>{$row['organization']}</td>
 																			  <td>{$row['categories']}</td>
 																			  <td>{$row['upl_time']}</td>";
-																	  echo"<td class='center'>";if($_SESSION['Print'] || $_SESSION['userType']){ ?>
-																	  
-																	  <a onclick="view_doc(<?php echo"'view',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
-																	  echo "'".$row['Doc_type']."'";echo")"?>" class='print-down' href='#'>
-																	  <img src='logo/print_icon.png'/></a>
+																	   echo"<td class='center'>";if($_SESSION['Print'] || $_SESSION['userType']){ ?>
+													 
+																	  <a  href="#" onclick="download_doc(<?php echo $row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
+																	  echo "'".$row['Doc_type']."'";echo")"?>" title="Click here to print" data-reveal-id="print_form" data-animation="fade" name="wallah"><img src='logo/print_icon.png'/></a>
 																	  <?php }
 																	  
 																	  

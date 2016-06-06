@@ -38,7 +38,7 @@ class chip_download {
 					  	/* Documents */
 					  	'txt'	=> 'text/plain',
 						'pdf'	=> 'application/pdf',
-					  	'doc' 	=> 'application/msword',
+					  	'docx' 	=> 'application/msword',
 					  	'xls'	=> 'application/vnd.ms-excel',
 					  	'ppt'	=> 'application/vnd.ms-powerpoint',
 					  

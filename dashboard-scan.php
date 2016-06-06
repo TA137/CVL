@@ -18,6 +18,12 @@
     <link href="css/styles.css" rel="stylesheet">
 	<link href="css/dashboard.css" rel="stylesheet">
 <link href="vendors/datatables/dataTables.bootstrap.css" rel="stylesheet" media="screen">
+<!-- Attach our CSS -->
+	  	<link rel="stylesheet" href="popup/reveal.css">	
+	  	
+		<script type="text/javascript" src="popup/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="popup/jquery.reveal.js"></script>
+		
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -25,7 +31,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body onbeforeonload="aa()">
   	<div class="header">
 	     <div class="container">
 	        <div class="row">
@@ -48,7 +54,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" id="navbar-brand" rel="home" href="#" title="Aahan Krish's Blog - Homepage">
+			<a class="navbar-brand" id="navbar-brand" rel="home" href="#">
 			 <?php
 										  $stmt = $DB_con->prepare("SELECT * FROM user where username=:user");
 										  $stmt->execute(array(':user'=>$user));
@@ -118,6 +124,7 @@
                     <!-- Main menu -->
                     <li class="current"><a href="#" onclick="all_files()"><i class="glyphicon glyphicon-file"></i> All files</a></li>
 					<li><a href="#folders" id="folders"onclick="selectFolders();"><i class="glyphicon glyphicon-folder-close"></i>Folders</a></li>
+					<li><a href="#action_sessions" id="action_sessions"onclick="session_action();"><i class="glyphicon glyphicon-tasks"></i>Sessions&Actions</a></li>
 					<li class="submenu">
                          <a href="#settings" id="settings">
                             <span class="caret pull-right"></span>
@@ -154,7 +161,7 @@
 							 <!-- Sub menu -->
 							 <ul>
 							  <?php
-										  $stmt = $DB_con->prepare("SELECT * FROM user,upload_doc where upload_doc.user_Id=user.user_Id order by upload_doc.id desc limit 6");
+										  $stmt = $DB_con->prepare("SELECT * FROM user where user_Id in (select user_Id from upload_doc)");
 										  $stmt->execute(array());
 										  $i=0;
 										  while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -176,6 +183,7 @@
 		
 			</div>
 			<div class="col-md-9 right-body" id="right-body">
+			  
 			  <div class="content-box-large">
   				<div class="panel-body" >
 				  <?php
@@ -212,23 +220,17 @@
 																			  <td>{$row['categories']}</td>
 																			  <td>{$row['upl_time']}</td>";
 																	  echo"<td class='center'>";if($_SESSION['Print'] || $_SESSION['userType']){ ?>
-																	  <form method="POST" class='print-down'action="print-files.php" target="_blank" style="width: 24px;" id="print_form<?php echo $row['id_doc']; ?>">
-																		<input value="<?php echo $row['id_doc']; ?>" type="text" name="id_doc" class="print-field">
-																		<input value="<?php echo $row['org_id']; ?>" type="text" name="org_id"class="print-field">
-																		<input value="<?php echo $row['cat_id']; ?>" type="text" name="cat_id" class="print-field">
-																		<input value="<?php echo $row['Doc_type']; ?>" type="text" name="Doc_type" class="print-field">
-																		<a onclick="document.getElementById('print_form'+<?php echo $row['id_doc']; ?>).submit();" name="wallah" href='#'><img src='logo/print_icon.png'/></a>
-																	  </form>
-																	  
-																	  
+													 
+																	  <a  href="#" onclick="download_doc(<?php echo $row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
+																	  echo "'".$row['Doc_type']."'";echo")"?>" title="Click here to print" data-reveal-id="print_form" data-animation="fade" name="wallah"><img src='logo/print_icon.png'/></a>
 																	  <?php }
 																	  
 																	  
-																	  if($_SESSION['Download'] || $_SESSION['userType']){ ?><a href="view_doc.php?doc_id=<?php echo $row['id_doc']."&org_id=".$row['org_id']."&cat_id=".$row['cat_id']."&Doc_type=";
+																	  if($_SESSION['Download'] || $_SESSION['userType']){ ?><a title="Click here to download" href="view_doc.php?doc_id=<?php echo $row['id_doc']."&org_id=".$row['org_id']."&cat_id=".$row['cat_id']."&Doc_type=";
 																	  echo $row['Doc_type']."&Action=download";?>" class='print-down'>
 																	  <img src='logo/download_icon.png'/></a><?php }
 																	  
-																	  if($row['Doc_type']!='docx' && $row['Doc_type']!='xlsx'){ ?><a onclick="view_doc(<?php echo"'view',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
+																	  if($row['Doc_type']!='docx' && $row['Doc_type']!='xlsx'){ ?><a title="Click here to view" onclick="view_doc(<?php echo"'view',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
 																	  echo "'".$row['Doc_type']."'";echo")"?>" class='print-down' href='#'><img src='logo/view.png'/></a><?php }echo"</td></tr>";
 																   }      
 								}
@@ -255,7 +257,6 @@
 	     </div>
 		 
 	</div>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -271,13 +272,15 @@
     <script src="js/tables.js"></script>
 	<script src="js/ajax_scripts.js"></script>
 	<script src="js/jquery.js"></script>
+	<!-- Attach necessary scripts -->
 	<script>
 	   $(document).ready(function() {
-        $('li').click(function() {
-          $(".current").removeClass("current");
-		  $(this).addClass("current");
-        });
-		$(window).scroll(function () {
+		  $('li').click(function() {
+			$(".current").removeClass("current");
+			$(this).addClass("current");
+		  });
+		});
+	   $(window).scroll(function () {
 			//console log determines when nav is fixed
 			//console.log($(window).scrollTop())
 			if ($(window).scrollTop() > 120) {
@@ -289,14 +292,40 @@
 				
 			}
 		});
-      });
 	   $(document).ready(function() {
     $('#example').DataTable();
 } );
+
 	  function focussing(id){
 			  $("#"+id).css("border","1px solid #88D5E9");
 	  }
 	</script>
-	
+	<div id="print_form" class="reveal-modal" style="z-index:1000;">
+			<form method="POST" class='print-down'action="print-files.php" target="_blank" style="width: 24px;" id="print_form<?php echo $row['id_doc']; ?>">
+					 <input id="id_doc" type="text" name="id_doc" class="print-field">
+					<input id="org_id" type="text" name="org_id"class="print-field">
+					<input id="cat_id" type="text" name="cat_id" class="print-field">
+					<input id="Doc_type" type="text" name="Doc_type" class="print-field">
+					 
+					 <ul class="form-style-1" id="form-style-1">
+					   <li>
+						   <label>Username</label>
+						   <div class="inner-addon left-addon">
+							   <i class="upload-glyph glyphicon glyphicon-user"></i>
+							   <input value="<?php echo $_SESSION['username']; ?>" type="text" name="username" class="form-control field-long">
+							</div>
+					   </li>
+					   <li>
+						   <label>Password</label>
+						   <div class="inner-addon left-addon">
+							   <i class="upload-glyph glyphicon glyphicon-lock"></i>
+									<input type="password" name="password" class="form-control field-long">
+							</div>
+					   </li>
+					   <li><div class="row"><div class="col-md-6 left"></div><div class="col-md-6 right"><input type="submit" value="Check user" id="check_user"/></div></div></li>
+					   </ul>	  
+				 </form> 
+			 <a class="close-reveal-modal">&#215;</a>
+		</div>
   </body>
 </html>

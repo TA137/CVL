@@ -36,6 +36,10 @@ $id=$_REQUEST['require_id'];
 $field=$_REQUEST['field'];
 $user->change_details($id,$field);
 }
+if(isset($_REQUEST['SubCategorie'])){
+$id=$_REQUEST['SubCategorie'];
+$user->SubCategorie($id);
+}
 
 }
 		else{

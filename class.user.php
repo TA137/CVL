@@ -50,6 +50,22 @@ class USER
 		}
 		
 	}
+	public function sub_categorie_ins($upload_Id,$sub_cat_id)
+	{
+		try
+		{
+			$stmt = $this->db->prepare("INSERT INTO upload_subcategories(sub_cat_id,upload_id) VALUES(:sub_cat_id, :upload_id)");
+			$stmt->bindparam(":sub_cat_id", $sub_cat_id);
+			$stmt->bindparam(":upload_id", $upload_Id);
+			$stmt->execute();
+			return $this->db->lastInsertId();	
+		}
+		catch(PDOException $e)
+		{
+			return "not done".$e;
+		}
+		
+	}
 	public function register_user($id,$fname,$lname,$title,$comp,$event_id)
 	{
 		try
@@ -101,6 +117,7 @@ class USER
 								$_SESSION['Print'] = $row['Print'];
 								$_SESSION['Download'] = $row['Download'];
 								$_SESSION['Upload'] = $row['Upload'];
+								$this->sessions($row['user_Id']);
 								return "ok";
 						}else{
 								return "wrong password";
@@ -112,6 +129,21 @@ class USER
 		catch(PDOException $e)
 		{
 			echo $e->getMessage();
+		}
+		
+	}
+	public function sessions($user_Id)
+	{
+		try
+		{
+			$stmt = $this->db->prepare("INSERT INTO doc_sessions(user_Id) VALUES(:user_Id)");
+			$stmt->bindparam(":user_Id", $user_Id);
+			$stmt->execute();
+			$_SESSION['current_session'] = $this->db->lastInsertId();	
+		}
+		catch(PDOException $e)
+		{
+			return "not done".$e;
 		}
 		
 	}
@@ -193,6 +225,40 @@ class USER
 			echo $e->getMessage();
 		}
 	}
+	public function check_subdirectory($id)
+	{
+		try
+		{
+				$stmt = $this->db->prepare("SELECT * from upload_subcategories where upload_id=:id");
+                $stmt->execute(array(":id"=>$id));
+                $row=$stmt->fetch(PDO::FETCH_ASSOC);
+				if(empty($row['id'])==true){
+					return "no sub-directory";
+				}else{
+					return $row['sub_cat_id'];
+				}
+		}catch(PDOException $e)
+		{
+			return "no sub-directory";
+		}
+	}
+	public function check_subcategories($id)
+	{
+		try
+		{
+				$stmt = $this->db->prepare("SELECT * from sub_categories where cat_id=:id");
+                $stmt->execute(array(":id"=>$id));
+                $row=$stmt->fetch(PDO::FETCH_ASSOC);
+				if(empty($row['sub_id'])==true){
+					return "no sub-directory";
+				}else{
+					return "ok";
+				}
+		}catch(PDOException $e)
+		{
+			return "no sub-directory";
+		}
+	}
 	public function change_details($id,$field)
 	{
 		try
@@ -238,6 +304,51 @@ class USER
 		{
 			echo $e->getMessage();
 		}
+	}
+	public function SubCategorie($id)
+	{
+		try
+		{
+				$stmt = $this->db->prepare("SELECT * from sub_categories where org_id=:id");
+				$stmt->execute(array(":id"=>$id));
+				$row=$stmt->fetch(PDO::FETCH_ASSOC);
+				if(empty($row['sub_id']) ==false){
+					echo"<li><label>Sub Categorie</label>
+						<div class='inner-addon left-addon'>
+						<i class='upload-glyph glyphicon glyphicon-user'></i>
+						<select  name='sub_categorie' id='sub_categorie' class='form-control field-long'>
+								<option value='sub_categorie'>Choose Sub-Categorie</option>";
+								echo "<option value='{$row['sub_id']}'>{$row['sub_directory']}</option>";
+								while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
+									echo "<option value='{$row['sub_id']}'>{$row['sub_directory']}</option>";
+								}
+                    echo"</select>
+						</div></li>";
+				}else{
+						echo 'no sub directory';
+				}
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+		}
+	}
+	public function doc_action_done($user_Id,$id,$action)
+	{
+		try
+		{
+			$stmt = $this->db->prepare("INSERT INTO actions_doc(session_Id,upl_doc_id,action_doc) VALUES(:user_Id,:upl_doc_id,:action_doc)");
+			$stmt->bindparam(":user_Id", $user_Id);
+			$stmt->bindparam(":upl_doc_id", $id);
+			$stmt->bindparam(":action_doc", $action);
+			$stmt->execute();
+			//$_SESSION['current_session'] = $this->db->lastInsertId();	
+		}
+		catch(PDOException $e)
+		{
+			return "not done".$e;
+		}
+		
 	}
 }
 

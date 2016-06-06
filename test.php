@@ -14,5 +14,5 @@
 </html>-->
     
 <?php
- echo $_POST['wallah'];
+echo md5("123456");
 ?>

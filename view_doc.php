@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(@isset($_SERVER['HTTP_REFERER'])){
+//if(@isset($_SERVER['HTTP_REFERER'])){
 require_once 'dbconfig.php'; //connection ?>
 <?php
 require_once("class.chip_download.php");
@@ -11,7 +11,12 @@ if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_
     $cat_id=$_REQUEST['cat_id'];
     $doc_type=$_REQUEST['Doc_type'];
     //$filesToView=array();
-    $filesToView=$org_id."/".$cat_id."/".$id.".".$doc_type;
+	$sub_categorie=$user->check_subdirectory($id);
+	if($sub_categorie=="no sub-directory"){
+		$filesToView=$org_id."/".$cat_id."/".$id.".".$doc_type;
+	}else{
+		$filesToView=$org_id."/".$cat_id."/".$sub_categorie."/".$id.".".$doc_type;
+	}
     if(unzip($filesToView)){
         if($action=='view'){
             if(strtolower($doc_type)=="jpg" || strtolower($doc_type)=="png"){
@@ -19,9 +24,13 @@ if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_
             }else if($doc_type=="pdf"){
                 echo "<iframe name='myiframe' style='width:100%; height:700px;' id='myiframe' src='uzzipped/".$filesToView."'>";
             }
+			$user->doc_action_done($_SESSION['current_session'],$id,"view");
+			echo ($_SESSION['current_session']);
         }
         if($action=='download'){
+			echo "wallah";
                             if (file_exists("uzzipped/".$filesToView)) {
+								$user->doc_action_done($_SESSION['current_session'],$id,"download");
                             $download_path = "uzzipped/";
                             $file = $filesToView;
                             $args = array(
@@ -58,6 +67,7 @@ if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_
                              
                             }
                  }else{
+					echo "not exists";
 				flush();
 				exit;
                  }
@@ -67,10 +77,10 @@ if(isset($_REQUEST['doc_id'])&&isset($_REQUEST['org_id'])&&isset($_REQUEST['cat_
     }
     
 }
-}
-		else{
-			header('location:login.php');
-		}
+//}
+//		else{
+//			header('location:login.php');
+//		}
 function unzip($files){
     $zip = new ZipArchive;
     if ($zip->open('my-archive.zip') === TRUE) {

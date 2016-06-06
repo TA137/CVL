@@ -1,14 +1,24 @@
 function upload_docddd(user_Id) {
       var categorie = document.getElementById("categorie").value;
+      var cat = document.getElementById("cat").value;
+      var sub_check;
+      if (cat=="1") {
+        categorie+="/"+document.getElementById("sub_categorie").value;
+        sub_check=1;
+      }else{
+        sub_check=0;
+      }
       var name = document.getElementById("name").value;
       var file_to_upload=document.getElementById("file_to_upload").value;
       var description=document.getElementById("description").value;
-	  if (file_to_upload.trim()=="" || name.trim()=="organization" || name.trim()=="" || categorie.trim()=="" || categorie=="categorie"){
+	  if (file_to_upload.trim()=="" || name.trim()=="organization" || name.trim()=="" || categorie.trim()=="" || categorie=="categorie" || (sub_check==1 && document.getElementById("sub_categorie").value=="sub_categorie")){
 	      if(name=="organization" || name.trim()==""){
                 document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Organization name not Given</div>";
 	      } else if(categorie=="categorie" || categorie.trim()==""){
                 document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Give Categorie</div>";
-	      }else if(file_to_upload.trim()==""){
+	      }else if(sub_check==1 && document.getElementById("sub_categorie").value=="sub_categorie"){
+                document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Sub-categorie not given.</div>";
+          }else if(file_to_upload.trim()==""){
                 document.getElementById("notification").innerHTML = "<div class='alert alert-danger'>Browse for a file!</div>";
 	      }
 	  
@@ -26,7 +36,7 @@ function upload_docddd(user_Id) {
                document.getElementById('description').value='';
 	     }
 	};
-	xhttp.open("POST", "upload_doc.php?user_Id="+user_Id+"&name="+name+"&categorie="+categorie+"&description="+description, true);
+	xhttp.open("POST", "upload_doc.php?user_Id="+user_Id+"&name="+name+"&categorie="+categorie+"&description="+description+"&sub_check="+sub_check, true);
 	xhttp.send(formData);
 	
 	return false;
@@ -115,6 +125,30 @@ function insideFolders(id) {
              }
         };
         xhttp.open("POST", "inside-folder.php?folder_id="+id, true);
+        xhttp.send();
+        
+        return false;
+}
+function insideCategories(id,org_id) {
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+             if (xhttp.readyState == 4 && xhttp.status == 200) {
+                document.getElementById("right-body").innerHTML = xhttp.responseText;  
+             }
+        };
+        xhttp.open("POST", "inside-categories.php?cat_id="+id+"&organization_id="+org_id, true);
+        xhttp.send();
+        
+        return false;
+}
+function insideSubCategories(id,categorie_id,org_id) {
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+             if (xhttp.readyState == 4 && xhttp.status == 200) {
+                document.getElementById("right-body").innerHTML = xhttp.responseText;  
+             }
+        };
+        xhttp.open("POST", "inside-sub-categories.php?sub_cat_id="+id+"&categorie_id="+categorie_id+"&org_id="+org_id, true);
         xhttp.send();
         
         return false;
@@ -363,6 +397,43 @@ function view_doc(action,id,org_id,cat_id,doc_type) {
              }
         };
         xhttp.open("GET", "view_doc.php?doc_id="+id+"&org_id="+org_id+"&cat_id="+cat_id+"&Doc_type="+doc_type+"&Action="+action, true);
+        xhttp.send();
+        
+        return false;
+}
+function download_doc(id,org_id,cat_id,doc_type) {
+        document.getElementById('id_doc').value=id;
+        document.getElementById('org_id').value=org_id;
+        document.getElementById('cat_id').value=cat_id;
+        document.getElementById('Doc_type').value=doc_type;
+        return false;
+}
+function show_subcategories(value) {
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+             if (xhttp.readyState == 4 && xhttp.status == 200) {
+                if (xhttp.responseText=="no sub directory"){
+                        document.getElementById("suba-direct").innerHTML = "<li></li>";
+                        document.getElementById('cat').value='0';
+                }else{
+                        document.getElementById("suba-direct").innerHTML = xhttp.responseText;
+                        document.getElementById('cat').value='1';
+                }
+                 
+             }
+        };
+        xhttp.open("GET", "ajax_php.php?SubCategorie="+value, true);
+        xhttp.send();
+        return false;
+}
+function session_action(){
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+             if (xhttp.readyState == 4 && xhttp.status == 200) {
+                document.getElementById("right-body").innerHTML = xhttp.responseText;
+             }
+        };
+        xhttp.open("POST", "session-action.php", true);
         xhttp.send();
         
         return false;
