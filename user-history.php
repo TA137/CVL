@@ -38,13 +38,14 @@ if($_REQUEST['user_Id']){
 			              <tbody>
 			                				  <?php while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
 																	  //add some setting like edit view card  and details
+                                                                      $name=substr($row['Doc_name'],0,30);
 																	  echo "<tr>
 																			<td>{$i}</td>
 																			<td>{$row['username']}</td>
                                                                             <td>{$row['time_in']}</td>
                                                                             <td>{$row['time_out']}</td>
 																			<td>{$row['tim_done']}</td>
-                                                                            <td>{$row['Doc_name']}</td>
+                                                                            <td>$name</td>
 																			<td>{$row['action_doc']}</td></tr>";
                                                                         $i++;
                                                                    }      
