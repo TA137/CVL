@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2016 at 05:45 PM
+-- Generation Time: Jun 07, 2016 at 05:07 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `actions_doc` (
   `tim_done` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `action_doc` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `actions_doc`
@@ -47,7 +47,17 @@ INSERT INTO `actions_doc` (`id`, `session_Id`, `upl_doc_id`, `tim_done`, `action
 (5, 3, 15, '2016-06-06 15:24:38', 'view'),
 (6, 4, 17, '2016-06-06 15:42:38', 'download'),
 (7, 4, 15, '2016-06-06 15:42:52', 'view'),
-(8, 4, 15, '2016-06-06 15:43:05', 'download');
+(8, 4, 15, '2016-06-06 15:43:05', 'download'),
+(9, 6, 20, '2016-06-06 20:04:41', 'view'),
+(10, 6, 15, '2016-06-06 20:05:08', 'download'),
+(11, 8, 15, '2016-06-06 21:17:46', 'download'),
+(12, 8, 15, '2016-06-06 21:17:52', 'view'),
+(13, 11, 15, '2016-06-07 08:38:52', 'download'),
+(14, 15, 15, '2016-06-07 10:32:38', 'download'),
+(15, 19, 17, '2016-06-07 13:42:44', 'download'),
+(16, 19, 15, '2016-06-07 14:12:53', 'view'),
+(17, 19, 15, '2016-06-07 14:13:02', 'view'),
+(18, 19, 15, '2016-06-07 14:16:18', 'view');
 
 -- --------------------------------------------------------
 
@@ -85,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `doc_sessions` (
   `time_in` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `time_out` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`sess_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `doc_sessions`
@@ -95,7 +105,22 @@ INSERT INTO `doc_sessions` (`sess_id`, `user_Id`, `time_in`, `time_out`) VALUES
 (1, 6, '2016-06-06 10:22:03', NULL),
 (2, 6, '2016-06-06 14:09:47', NULL),
 (3, 12, '2016-06-06 14:25:14', NULL),
-(4, 1, '2016-06-06 15:30:32', NULL);
+(4, 1, '2016-06-06 15:30:32', NULL),
+(5, 6, '2016-06-06 20:00:34', NULL),
+(6, 6, '2016-06-06 20:03:53', NULL),
+(7, 6, '2016-06-06 20:05:51', NULL),
+(8, 6, '2016-06-06 20:06:16', NULL),
+(9, 12, '2016-06-06 21:26:07', NULL),
+(10, 6, '2016-06-06 21:27:35', NULL),
+(11, 6, '2016-06-07 07:46:36', '2016-06-07 08:51:08'),
+(12, 6, '2016-06-07 08:51:35', '2016-06-07 08:52:16'),
+(13, 1, '2016-06-07 08:52:28', '2016-06-07 08:52:36'),
+(14, 6, '2016-06-07 08:52:38', '2016-06-07 09:18:59'),
+(15, 6, '2016-06-07 09:25:51', '2016-06-07 11:50:14'),
+(16, 1, '2016-06-07 11:50:26', '2016-06-07 11:50:33'),
+(17, 6, '2016-06-07 11:50:37', '2016-06-07 12:01:31'),
+(18, 1, '2016-06-07 12:01:42', '2016-06-07 12:01:48'),
+(19, 6, '2016-06-07 12:01:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -237,7 +262,7 @@ INSERT INTO `user` (`user_Id`, `Firstname`, `Lastname`, `username`, `Email`, `Ge
 (9, 'murenzi', 'callixte', 'semana', NULL, 'male', 'profile/', 0, NULL, 0, 0, NULL, 1, 'e10adc3949ba59abbe56e057f20f883e'),
 (10, 'tom', 'kaman', 'tomas', 'tomas@gmail.com', 'male', 'profile/', 0, NULL, 0, 0, '0788455689', 1, 'e10adc3949ba59abbe56e057f20f883e'),
 (11, 'uwineza', 'solei', 'uwineza', NULL, 'female', 'profile/', 1, 1, 0, 0, NULL, 1, 'e10adc3949ba59abbe56e057f20f883e'),
-(12, 'muhizi', 'Aristide', 'muhizia4', 'muhizia4@gmail.com', 'male', 'profile/12.jpg', 0, 0, 0, 0, '0788778602', 1, 'e10adc3949ba59abbe56e057f20f883e'),
+(12, 'muhizi', 'Aristide', 'muhizia4', 'muhizia4@gmail.com', 'male', 'profile/12.jpg', 0, 1, 1, 0, '0788778602', 1, 'e10adc3949ba59abbe56e057f20f883e'),
 (13, 'muganza', 'adolphe', 'muganza1', NULL, 'male', 'profile/', 0, 0, 0, 0, NULL, 1, 'e10adc3949ba59abbe56e057f20f883e');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
