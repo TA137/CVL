@@ -10,7 +10,7 @@ require_once 'dbconfig.php'; //connection
 				</div>
   				<div class="panel-body">
 				  <?php
-									  $stmt = $DB_con->prepare("select max(sess_id) sess,user.user_Id id,user.username username,max(doc_sessions.time_in) a from user right join doc_sessions on user.user_Id=doc_sessions.user_Id where user.user_Id in(select user_Id from doc_sessions) group by user.user_Id order by a desc");
+									  $stmt = $DB_con->prepare("select max(sess_id) sess,user.user_Id id_user,user.username username,max(doc_sessions.time_in) a from user right join doc_sessions on user.user_Id=doc_sessions.user_Id where user.user_Id in(select user_Id from doc_sessions) group by user.user_Id order by a desc");
 									  $count_stmt = $DB_con->prepare("SELECT count(*) cat_num FROM user right join doc_sessions on user.user_Id=doc_sessions.user_Id where user.user_Id in(select user_Id from doc_sessions) group by user.user_Id order by time_in");
 									  $stmt->execute(array());
 									  $count_stmt->execute(array());
@@ -41,7 +41,7 @@ require_once 'dbconfig.php'; //connection
 									  	  
 																	  echo "<tr>
 																			<td>{$i}</td>
-																			<td><a href='#'>{$row['username']}</a></td>
+																			<td><a href='#' onclick='user_history({$row['id_user']})'>{$row['username']}</a></td>
                                                                             <td>{$row['a']}</td>
 																			<td>{$last_r['tim_done']}</td>
                                                                             <td>{$last_r['Doc_name']}</td>

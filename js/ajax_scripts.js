@@ -446,3 +446,15 @@ function session_action(){
         
         return false;
 }
+function user_history(id){
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+             if (xhttp.readyState == 4 && xhttp.status == 200) {
+                document.getElementById("right-body").innerHTML = xhttp.responseText;
+             }
+        };
+        xhttp.open("POST", "user-history.php?user_Id="+id, true);
+        xhttp.send();
+        
+        return false;
+}
