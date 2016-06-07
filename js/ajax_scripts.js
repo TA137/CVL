@@ -396,16 +396,24 @@ function view_doc(action,id,org_id,cat_id,doc_type) {
                 document.getElementById("right-body").innerHTML = xhttp.responseText;  
              }
         };
-        xhttp.open("GET", "view_doc.php?doc_id="+id+"&org_id="+org_id+"&cat_id="+cat_id+"&Doc_type="+doc_type+"&Action="+action, true);
+        xhttp.open("GET", "view_doc.php?id_doc="+id+"&org_id="+org_id+"&cat_id="+cat_id+"&Doc_type="+doc_type+"&Action="+action, true);
         xhttp.send();
         
         return false;
 }
-function download_doc(id,org_id,cat_id,doc_type) {
+function print_doc(id,org_id,cat_id,doc_type) {
         document.getElementById('id_doc').value=id;
         document.getElementById('org_id').value=org_id;
         document.getElementById('cat_id').value=cat_id;
         document.getElementById('Doc_type').value=doc_type;
+        return false;
+}
+function download_doc(action,id,org_id,cat_id,doc_type) {
+        document.getElementById('down_action').value=action;
+        document.getElementById('down_id_doc').value=id;
+        document.getElementById('down_org_id').value=org_id;
+        document.getElementById('down_cat_id').value=cat_id;
+        document.getElementById('down_Doc_type').value=doc_type;
         return false;
 }
 function show_subcategories(value) {

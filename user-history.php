@@ -10,8 +10,8 @@ require_once 'dbconfig.php'; //connection
 				</div>
   				<div class="panel-body">
 				  <?php
-									  $stmt = $DB_con->prepare("select max(sess_id) sess,user.user_Id id,user.username username,max(doc_sessions.time_in) a from user right join doc_sessions on user.user_Id=doc_sessions.user_Id where user.user_Id in(select user_Id from doc_sessions) group by user.user_Id order by a desc");
-									  $count_stmt = $DB_con->prepare("SELECT count(*) cat_num FROM user right join doc_sessions on user.user_Id=doc_sessions.user_Id where user.user_Id in(select user_Id from doc_sessions) group by user.user_Id order by time_in");
+									  $stmt = $DB_con->prepare("select * from user right join(doc_sessions left join (actions_doc join upload_doc on actions_doc.upl_doc_id=upload_doc.id) on doc_sessions.sess_id = actions_doc.session_Id) on user.user_Id=doc_sessions.user_Id where user.user_Id=:user_id");
+                                      $count_stmt = $DB_con->prepare("SELECT count(*) cat_num FROM user right join(doc_sessions left join (actions_doc join upload_doc on actions_doc.upl_doc_id=upload_doc.id) on doc_sessions.sess_id = actions_doc.session_Id) on user.user_Id=doc_sessions.user_Id where user.user_Id=:user_id");
 									  $stmt->execute(array());
 									  $count_stmt->execute(array());
 									  $count_row=$count_stmt->fetch(PDO::FETCH_ASSOC);
@@ -26,20 +26,12 @@ require_once 'dbconfig.php'; //connection
 			                <tr>
 			                  <th>#</th>
 			                  <th>username</th>
-                              <th>Last session Time in</th>
-                              <th>Last Time done action</th>
-							  <th>On file action</th>
-							  <th></th>
+                              
 			                </tr>
 			              </thead>
 			              <tbody>
 			                				  <?php while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-																	  //add some setting like edit view card  and details
-																$last_s = $DB_con->prepare("select * from actions_doc join upload_doc on actions_doc.upl_doc_id=upload_doc.id where actions_doc.session_Id=:session_id order by actions_doc.id desc limit 1");
-																$last_s->execute(array(':session_id'=>$row['sess']));
-																$last_r=$last_s->fetch(PDO::FETCH_ASSOC);
-									  	  
-																	  echo "<tr>
+                                                                      echo "<tr>
 																			<td>{$i}</td>
 																			<td><a href='#'>{$row['username']}</a></td>
                                                                             <td>{$row['a']}</td>

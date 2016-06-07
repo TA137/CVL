@@ -31,7 +31,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body onbeforeonload="aa()">
+  <body onclose="ConfirmClose()">
   	<div class="header">
 	     <div class="container">
 	        <div class="row">
@@ -124,7 +124,10 @@
                     <!-- Main menu -->
                     <li class="current"><a href="#" onclick="all_files()"><i class="glyphicon glyphicon-file"></i> All files</a></li>
 					<li><a href="#folders" id="folders"onclick="selectFolders();"><i class="glyphicon glyphicon-folder-close"></i>Folders</a></li>
+					<?php if($_SESSION['userType']){
+							  ?>
 					<li><a href="#action_sessions" id="action_sessions"onclick="session_action();"><i class="glyphicon glyphicon-tasks"></i>Sessions&Actions</a></li>
+					<?php } ?>
 					<li class="submenu">
                          <a href="#settings" id="settings">
                             <span class="caret pull-right"></span>
@@ -221,14 +224,13 @@
 																			  <td>{$row['upl_time']}</td>";
 																	  echo"<td class='center'>";if($_SESSION['Print'] || $_SESSION['userType']){ ?>
 													 
-																	  <a  href="#" onclick="download_doc(<?php echo $row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
+																	  <a  href="#" onclick="print_doc(<?php echo $row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
 																	  echo "'".$row['Doc_type']."'";echo")"?>" title="Click here to print" data-reveal-id="print_form" data-animation="fade" name="wallah"><img src='logo/print_icon.png'/></a>
 																	  <?php }
 																	  
 																	  
-																	  if($_SESSION['Download'] || $_SESSION['userType']){ ?><a title="Click here to download" href="view_doc.php?doc_id=<?php echo $row['id_doc']."&org_id=".$row['org_id']."&cat_id=".$row['cat_id']."&Doc_type=";
-																	  echo $row['Doc_type']."&Action=download";?>" class='print-down'>
-																	  <img src='logo/download_icon.png'/></a><?php }
+																	  if($_SESSION['Download'] || $_SESSION['userType']){ ?><a  href="#" onclick="download_doc(<?php echo"'download',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
+																	  echo "'".$row['Doc_type']."'";echo")"?>" title="Click here to download" data-reveal-id="download_form" data-animation="fade" name="wallah"><img src='logo/download_icon.png'/></a><?php }
 																	  
 																	  if($row['Doc_type']!='docx' && $row['Doc_type']!='xlsx'){ ?><a title="Click here to view" onclick="view_doc(<?php echo"'view',".$row['id_doc'].",".$row['org_id'].",".$row['cat_id'].",";
 																	  echo "'".$row['Doc_type']."'";echo")"?>" class='print-down' href='#'><img src='logo/view.png'/></a><?php }echo"</td></tr>";
@@ -306,6 +308,34 @@
 					<input id="org_id" type="text" name="org_id"class="print-field">
 					<input id="cat_id" type="text" name="cat_id" class="print-field">
 					<input id="Doc_type" type="text" name="Doc_type" class="print-field">
+					 
+					 <ul class="form-style-1" id="form-style-1">
+					   <li>
+						   <label>Username</label>
+						   <div class="inner-addon left-addon">
+							   <i class="upload-glyph glyphicon glyphicon-user"></i>
+							   <input value="<?php echo $_SESSION['username']; ?>" type="text" name="username" class="form-control field-long">
+							</div>
+					   </li>
+					   <li>
+						   <label>Password</label>
+						   <div class="inner-addon left-addon">
+							   <i class="upload-glyph glyphicon glyphicon-lock"></i>
+									<input type="password" name="password" class="form-control field-long">
+							</div>
+					   </li>
+					   <li><div class="row"><div class="col-md-6 left"></div><div class="col-md-6 right"><input type="submit" value="Check user" id="check_user"/></div></div></li>
+					   </ul>	  
+				 </form> 
+			 <a class="close-reveal-modal">&#215;</a>
+		</div>
+	<div id="download_form" class="reveal-modal" style="z-index:1000;">
+			<form method="POST" class='print-down'action="view_doc.php" target="_blank" style="width: 24px;" id="print_form<?php echo $row['id_doc']; ?>">
+					 <input id="down_id_doc" type="text" name="id_doc" class="print-field">
+					<input id="down_org_id" type="text" name="org_id"class="print-field">
+					<input id="down_cat_id" type="text" name="cat_id" class="print-field">
+					<input id="down_Doc_type" type="text" name="Doc_type" class="print-field">
+					<input id="down_action" type="text" name="Action" class="print-field">
 					 
 					 <ul class="form-style-1" id="form-style-1">
 					   <li>

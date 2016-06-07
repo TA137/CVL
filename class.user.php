@@ -350,6 +350,20 @@ class USER
 		}
 		
 	}
+	public function update_sessions($sess_id)
+	{
+		try
+		{
+				$stmt = $this->db->prepare("update doc_sessions set time_out=TIMESTAMP(now()) where sess_id=:id");										  
+				$stmt->bindparam(":id", $sess_id);
+				$stmt->execute();
+				return "ok";
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+		}
+	}
 }
 
 
