@@ -37,8 +37,8 @@ require_once 'dbconfig.php'; //connection ?>
                                                             <td>{$row['username']}</td>";
 															?>
                                                             <td><input type='checkbox' onclick="change_details(<?php echo $row['user_Id']; ?>,'Print')"<?php if($row['Print']){ echo "checked";} ?> ></td>
-                                                            <td><input type='checkbox' onclick="change_details(<?php echo $row['user_Id']; ?>,'Download')"<?php if($row['Download']){ echo "checked";} ?> ></td>
                                                             <td class='center'><input type='checkbox' onclick="change_details(<?php echo $row['user_Id']; ?>,'Upload')"<?php if($row['Upload']){ echo "checked";} ?> ></td>
+                                                            <td><input type='checkbox' onclick="change_details(<?php echo $row['user_Id']; ?>,'Download')"<?php if($row['Download']){ echo "checked";} ?> ></td>
                                                             <td class='center'><input type='checkbox'<?php if($row['Print'] && $row['Download'] && $row['Upload']){ echo "checked";} ?> ></td>
                                                <?php            
                                                  }    
