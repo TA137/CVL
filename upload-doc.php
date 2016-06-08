@@ -30,7 +30,7 @@ require_once 'dbconfig.php'; //connection ?>
                                     <li>
 										<label>Categorie</label>
 										<div class="inner-addon left-addon">
-											<input name="cat" id="cat" class="form-control field-long" >
+											<input name="cat" id="cat" class="form-control field-long print-field" >
 											<i class="upload-glyph glyphicon glyphicon-user"></i>
 											<select onchange='show_subcategories(this.value)' name="categorie" id="categorie" class="form-control field-long" >
                                                 <option value="categorie">Choose Categorie</option>
