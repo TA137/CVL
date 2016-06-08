@@ -309,7 +309,7 @@ class USER
 	{
 		try
 		{
-				$stmt = $this->db->prepare("SELECT * from sub_categories where org_id=:id");
+				$stmt = $this->db->prepare("SELECT * from sub_categories where cat_id=:id");
 				$stmt->execute(array(":id"=>$id));
 				$row=$stmt->fetch(PDO::FETCH_ASSOC);
 				if(empty($row['sub_id']) ==false){

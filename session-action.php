@@ -28,14 +28,15 @@ require_once 'dbconfig.php'; //connection
 			                  <th>username</th>
                               <th>Last session Time in</th>
                               <th>Last Time done action</th>
-							  <th>On file action</th>
-							  <th></th>
+							  <th>Organizaton</th>
+							  <th>File</th>
+							  <th>Action</th>
 			                </tr>
 			              </thead>
 			              <tbody>
 			                				  <?php while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
 																	  //add some setting like edit view card  and details
-																$last_s = $DB_con->prepare("select * from actions_doc join upload_doc on actions_doc.upl_doc_id=upload_doc.id where actions_doc.session_Id=:session_id order by actions_doc.id desc limit 1");
+																$last_s = $DB_con->prepare("select * from actions_doc join (upload_doc join organization on upload_doc.org_id=organization.id) on actions_doc.upl_doc_id=upload_doc.id where actions_doc.session_Id=:session_id order by actions_doc.id desc limit 1");
 																$last_s->execute(array(':session_id'=>$row['sess']));
 																$last_r=$last_s->fetch(PDO::FETCH_ASSOC);
 									  	  							$name=substr($last_r['Doc_name'],0,30);
@@ -44,6 +45,7 @@ require_once 'dbconfig.php'; //connection
 																			<td><a href='#' onclick='user_history({$row['id_user']})'>{$row['username']}</a></td>
                                                                             <td>{$row['a']}</td>
 																			<td>{$last_r['tim_done']}</td>
+																			<td>{$last_r['organization']}</td>
                                                                             <td>$name</td>
 																			<td>{$last_r['action_doc']}</td></tr>";
                                                                         $i++;
